@@ -1,0 +1,5 @@
+PaddleOCR文字检测
+https://github.com/PaddlePaddle/PaddleOCR/blob/develop/doc/doc_ch/detection.md
+
+使用PaddleOCR，训练自己的模型
+https://my.oschina.net/u/4267707/blog/4922785
