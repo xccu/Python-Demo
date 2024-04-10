@@ -1,7 +1,10 @@
 from zhipuai import ZhipuAI
+from configure import get_yaml
+
+key = get_yaml('zhipu.key')
 
 # 同步调用
-client = ZhipuAI(api_key="fd7e5c00a447ae442e789befd4714e3b.R3h3EJmRSokivksT") # 填写您自己的APIKey
+client = ZhipuAI(api_key=key) # 填写您自己的APIKey
 response = client.chat.completions.create(
     model="glm-4",  # 填写需要调用的模型名称
     messages=[
@@ -10,3 +13,4 @@ response = client.chat.completions.create(
     ],
 )
 print(response.choices[0].message)
+

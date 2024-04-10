@@ -1,0 +1,5 @@
+zhipu:
+  key : #key
+  exp : 10000
+  api_base : https://open.bigmodel.cn/api/paas/v4
+  model : glm-4
