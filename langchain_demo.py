@@ -5,6 +5,7 @@
 
 from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
+from langchain.prompts import PromptTemplate
 
 from configure import get_yaml
 from utils.jwt_token import generate_token
@@ -14,7 +15,7 @@ exp = get_yaml('zhipu.exp')
 
 token = generate_token(key,exp)
 
-zhipu_llm = ChatOpenAI(
+llm = ChatOpenAI(
     model_name= "glm-4",
     openai_api_base= "https://open.bigmodel.cn/api/paas/v4",
     openai_api_key=token,
@@ -29,11 +30,12 @@ messages = [
      #HumanMessage(content="only give me the result,no other words:the result of add 3 to 4"),
  ]
 
-response = zhipu_llm.invoke(messages)
+response = llm.invoke(messages)
 print(response)
 
 
-#zhipu_llm.streaming = True
-#for chunk in zhipu_llm.stream("猪八戒的爸爸是谁"):
+#llm.streaming = True
+#for chunk in llm.stream("猪八戒的爸爸是谁"):
     # print(chunk.content, end="", flush=True)
 #    print(chunk.content)
+
