@@ -1,5 +1,5 @@
 zhipu:
-  key : #key
+  key : fd7e5c00a447ae442e789befd4714e3b.R3h3EJmRSokivksT
   exp : 10000
   api_base : https://open.bigmodel.cn/api/paas/v4
   model : glm-4
