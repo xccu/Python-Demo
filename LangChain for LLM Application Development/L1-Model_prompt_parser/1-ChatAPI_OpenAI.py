@@ -1,6 +1,7 @@
 #!pip install python-dotenv
 #!pip install openai
 
+# https://learn.deeplearning.ai/courses/langchain/lesson/2/models%2C-prompts-and-parsers
 from zhipuai import ZhipuAI
 from configure import get_yaml
 
