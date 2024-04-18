@@ -5,7 +5,7 @@ from utils.jwt_token import generate_zhipu_token
 from langchain_openai import ChatOpenAI
 
 # 目标：把给定的信息转化为自定义风格的信息
-chat = model = ChatOpenAI(
+chat = ChatOpenAI(
     model_name= "glm-4",
     openai_api_base= "https://open.bigmodel.cn/api/paas/v4",
     openai_api_key=generate_zhipu_token(),
