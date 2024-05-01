@@ -1,8 +1,11 @@
 # Let's start with defining how we would like the LLM output to look like:
 import json
 
+from langchain_community.chat_models import ChatZhipuAI
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
+
+from utils import load_env
 from utils.jwt_token import generate_zhipu_token
 
 #让llm输出json，并使用langchain解析该输出
@@ -48,17 +51,19 @@ price_value
 text: {text}
 """
 
+# read local .env file
+load_env.load()
+
 #提示模板
 prompt_template = ChatPromptTemplate.from_template(review_template)
 print(prompt_template)
 
 messages = prompt_template.format_messages(text=customer_review)
-chat = ChatOpenAI(
-    model_name= "glm-4",
-    openai_api_base= "https://open.bigmodel.cn/api/paas/v4",
-    openai_api_key= generate_zhipu_token(),
-    streaming=False,
-    verbose=True
+
+# 目标：把给定的信息转化为自定义风格的信息
+chat = ChatZhipuAI(
+    model="glm-4",
+    temperature=0.5,
 )
 
 response = chat(messages)

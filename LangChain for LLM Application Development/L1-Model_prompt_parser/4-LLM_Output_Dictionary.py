@@ -2,9 +2,11 @@
 
 from langchain.output_parsers import ResponseSchema
 from langchain.output_parsers import StructuredOutputParser
+from langchain_community.chat_models import ChatZhipuAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
+from utils import load_env
 from utils.jwt_token import generate_zhipu_token
 
 #让llm输出json，并使用langchain解析该输出
@@ -71,12 +73,12 @@ messages = prompt.format_messages(text=customer_review,
 
 print(messages[0].content)
 
-chat = ChatOpenAI(
-    model_name= "glm-4",
-    openai_api_base= "https://open.bigmodel.cn/api/paas/v4",
-    openai_api_key= generate_zhipu_token(),
-    streaming=False,
-    verbose=True
+# 加载本地 .env 文件
+load_env.load()
+# 目标：把给定的信息转化为自定义风格的信息
+chat = ChatZhipuAI(
+    model="glm-4",
+    temperature=0.5,
 )
 response = chat(messages)
 

@@ -6,12 +6,16 @@ from langchain.memory import ConversationSummaryBufferMemory
 #让llm编写一份长文本的摘要
 
 #目前仅gpt模型支持
-llm = ChatOpenAI(
-    model_name= get_yaml('gpt.model'),
-    openai_api_base=  get_yaml('gpt.api_base'),
-    openai_api_key= get_yaml('gpt.key'),
-    verbose=True
-)
+# llm = ChatOpenAI(
+#     model_name= get_yaml('gpt.model'),
+#     openai_api_base=  get_yaml('gpt.api_base'),
+#     openai_api_key= get_yaml('gpt.key'),
+#     verbose=True
+# )
+from utils import load_env
+
+load_env.load()
+llm = ChatOpenAI(temperature=0.0, model="gpt-3.5-turbo")
 
 # create a long string
 schedule = "There is a meeting at 8am with your product team. \

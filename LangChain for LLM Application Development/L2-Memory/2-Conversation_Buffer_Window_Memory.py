@@ -1,9 +1,9 @@
 from langchain.memory import ConversationBufferWindowMemory
-from langchain.chat_models import ChatOpenAI
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
+from langchain_community.chat_models import ChatZhipuAI
 
-from utils.jwt_token import generate_zhipu_token
+from utils import load_env
 
 #只保留一个窗口记忆的对话缓存记忆
 
@@ -17,12 +17,14 @@ memory.save_context({"input": "Not much, just hanging"},
 print(memory.buffer)
 print(memory.load_memory_variables({}))
 
-llm = ChatOpenAI(
-    model_name= "glm-4",
-    openai_api_base= "https://open.bigmodel.cn/api/paas/v4",
-    openai_api_key=generate_zhipu_token(),
-    verbose=True
+# 加载本地 .env 文件
+load_env.load()
+# 目标：把给定的信息转化为自定义风格的信息
+llm = ChatZhipuAI(
+    model="glm-4",
+    temperature=0.5,
 )
+
 #变量k表示设置记住的对话条数
 memory = ConversationBufferWindowMemory(k=1)
 conversation = ConversationChain(

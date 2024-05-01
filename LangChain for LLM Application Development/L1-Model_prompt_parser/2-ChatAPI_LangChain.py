@@ -1,19 +1,17 @@
 #Chat API : LangChain
 from langchain.prompts import ChatPromptTemplate
+from langchain_community.chat_models import ChatZhipuAI
 
-from utils.jwt_token import generate_zhipu_token
+from utils import load_env
 from langchain_openai import ChatOpenAI
 
+# 加载本地 .env 文件
+load_env.load()
 # 目标：把给定的信息转化为自定义风格的信息
-chat = ChatOpenAI(
-    model_name= "glm-4",
-    openai_api_base= "https://open.bigmodel.cn/api/paas/v4",
-    openai_api_key=generate_zhipu_token(),
-    streaming=False,
-    verbose=True
+chat = ChatZhipuAI(
+    model="glm-4",
+    temperature=0.5,
 )
-
-
 
 #指定提示：将指定文本{text}转换为给定样式{style}
 template_string = """Translate the text that is delimited by triple backticks \
