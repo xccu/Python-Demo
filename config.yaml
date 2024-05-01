@@ -4,7 +4,12 @@ zhipu:
   api_base : https://open.bigmodel.cn/api/paas/v4
   model : glm-4
 
-gpt:
+gpt_proxy:
   key: {key}
   api_base: https://api.fe8.cn/v1
+  model: gpt-3.5-turbo
+
+gpt:
+  key: {key}
+  api_base: https://api.openai.com/v1
   model: gpt-3.5-turbo
