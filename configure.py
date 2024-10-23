@@ -1,6 +1,5 @@
 # 需要安装：
-#   pyyaml      5.4.1
-
+#    pip install pyYAML==3.12
 import configparser
 import os
 import yaml

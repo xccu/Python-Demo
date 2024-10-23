@@ -28,7 +28,8 @@ embeddings_model = OpenAIEmbeddings(model="embedding-2")
 #note: need to config OPENAI_API_BASE in .env
 #<Request('POST', 'https://api.openai.com/v1/embeddings')>
 index = VectorstoreIndexCreator(
-    vectorstore_cls=DocArrayInMemorySearch
+    vectorstore_cls=DocArrayInMemorySearch,
+    embedding=embeddings_model
 ).from_loaders([loader])
 
 query ="Please list all your shirts with sun protection \
@@ -40,8 +41,8 @@ in a table in markdown and summarize each one."
 #     openai_api_key=generate_zhipu_token()
 # )
 
-llm_replacement_model = ChatOpenAI(temperature = 0.0)
-#llm_replacement_model = ChatZhipuAI(model="glm-3-turbo",temperature=0.0)
+#llm_replacement_model = ChatOpenAI(temperature = 0.0)
+llm_replacement_model = ChatZhipuAI(model="glm-4",temperature=0.0)
 
 
 response = index.query(query, llm = llm_replacement_model)

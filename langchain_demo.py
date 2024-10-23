@@ -1,41 +1,42 @@
 #pip install langchain-openai
 #pip install langchain
 
-# https://blog.csdn.net/oHeHui1/article/details/136389922
-
-from langchain_core.messages import HumanMessage
-from langchain_openai import ChatOpenAI
-from langchain.prompts import PromptTemplate
-
 from configure import get_yaml
-from utils.jwt_token import generate_token
+from langchain_openai import ChatOpenAI
+from langchain.prompts import (
+    ChatPromptTemplate,
+    MessagesPlaceholder,
+    SystemMessagePromptTemplate,
+    HumanMessagePromptTemplate,
+)
+from langchain.chains import LLMChain
+from langchain.memory import ConversationBufferMemory
 
 key = get_yaml('zhipu.key')
-exp = get_yaml('zhipu.exp')
 
-token = generate_token(key,exp)
-
-model = ChatOpenAI(
-    model_name= "glm-4",
-    openai_api_base= "https://open.bigmodel.cn/api/paas/v4",
-    openai_api_key=token,
-    streaming=False,
-    verbose=True
+llm = ChatOpenAI(
+    temperature=0.95,
+    model="glm-4",
+    openai_api_key=key,
+    openai_api_base="https://open.bigmodel.cn/api/paas/v4/"
 )
 
-messages = [
-     # AIMessage(content="Hi."),
-     # SystemMessage(content="Your role is a poet."),
-     HumanMessage(content="深圳2008年的GDP多少亿"),
-     #HumanMessage(content="only give me the result,no other words:the result of add 3 to 4"),
- ]
+prompt = ChatPromptTemplate(
+    messages=[
+        SystemMessagePromptTemplate.from_template(
+            "你是个聊天机器人，知道很多知识"
+        ),
+        MessagesPlaceholder(variable_name="chat_history"),
+        HumanMessagePromptTemplate.from_template("{question}")
+    ]
+)
 
-response = model.invoke(messages)
+memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+conversation = LLMChain(
+    llm=llm,
+    prompt=prompt,
+    verbose=True,
+    memory=memory
+)
+response = conversation.invoke({"question": "智普AI如何读取txt文件并生成摘要，请给出示例代码"})
 print(response)
-
-
-#llm.streaming = True
-#for chunk in llm.stream("猪八戒的爸爸是谁"):
-    # print(chunk.content, end="", flush=True)
-#    print(chunk.content)
-

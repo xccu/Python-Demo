@@ -2,6 +2,7 @@
 #!pip install openai
 
 # https://learn.deeplearning.ai/courses/langchain/lesson/2/models%2C-prompts-and-parsers
+from langchain.llms import openai
 from zhipuai import ZhipuAI
 from configure import get_yaml
 
@@ -30,7 +31,7 @@ def get_completion(prompt):
 
     key = get_yaml('zhipu.key')
     client = ZhipuAI(api_key=key)  # 填写您自己的APIKey
-    # response = openai.ChatCompletion.create(
+    #response = openai.ChatCompletion.create(
     response = client.chat.completions.create(
         model="glm-4",
         messages=messages,
